@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KLEE — Marketing Agentur</title>
+  <meta name="description" content="KLEE ist eine Marketingagentur, die Marken mit Haltung entwickelt. Strategie, Design und Kommunikation aus einer Hand." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep:   #1A1800;
+      --green-mid:    #5C5800;
+      --green-light:  #8C8800;
+      --cream:        #F5F0E8;
+      --cream-dark:   #EDE8DC;
+      --gold:         #F3F633;
+      --text-dark:    #1A1A18;
+      --text-muted:   #6B6B62;
+      --white:        #FFFFFF;
+
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+
+      --space-xs:  0.5rem;
+      --space-s:   1rem;
+      --space-m:   2rem;
+      --space-l:   4rem;
+      --space-xl:  8rem;
+
+      --max-w: 1200px;
+      --nav-h: clamp(60px, calc(46px + 4.2vw), 100px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      font-weight: 300;
+      color: var(--text-dark);
+      background: var(--cream);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── Typography ─── */
+    h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.1; }
+
+    h1 { font-size: clamp(3rem, 8vw, 7rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+    h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+
+    p { font-size: clamp(1rem, 1.5vw, 1.125rem); max-width: 60ch; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Layout Helpers ─── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    /* ─── Navigation ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 200;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(26,24,0,0.1);
+      transition: height 0.3s ease;
+    }
+
+    nav.scrolled {
+      height: calc(var(--nav-h) * 0.82);
+      box-shadow: 0 2px 20px rgba(26,24,0,0.06);
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    /* LEFT: nav links */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.5rem, 3vw, 3rem);
+      list-style: none;
+    }
+
+    .nav-left a {
+      font-size: clamp(0.75rem, 1vw, 0.875rem);
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--green-deep);
+      position: relative;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .nav-left a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--green-deep);
+      transition: width 0.3s ease;
+    }
+
+    .nav-left a:hover::after { width: 100%; }
+
+    /* CENTER: logo */
+    .nav-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-logo a {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      letter-spacing: 0.1em;
+      color: var(--green-deep);
+      line-height: 1;
+    }
+
+    .nav-logo-dot {
+      display: inline-block;
+      width: clamp(6px, 1vw, 9px);
+      height: clamp(6px, 1vw, 9px);
+      background: var(--gold);
+      border-radius: 50%;
+      margin-left: 3px;
+      vertical-align: middle;
+      transform: translateY(-3px);
+    }
+
+    /* RIGHT: CTA */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1.5rem;
+    }
+
+    .nav-cta {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.5rem;
+      background: var(--green-deep);
+      color: var(--cream);
+      border-radius: 2px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.82; }
+
+    /* Hamburger (mobile) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+      z-index: 201;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--green-deep);
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile slide-in menu (from left, like FHB) */
+    .mobile-menu {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      bottom: 0;
+      width: min(80vw, 360px);
+      background: var(--cream);
+      z-index: 199;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-l) var(--space-m);
+      border-right: 1px solid rgba(26,24,0,0.1);
+    }
+
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      top: var(--nav-h);
+      background: rgba(26,24,0,0.3);
+      z-index: 198;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    .mobile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .mobile-menu a {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      color: var(--green-deep);
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(26,24,0,0.08);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--green-mid); }
+
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      padding-top: var(--nav-h);
+      background: var(--green-deep);
+      color: var(--cream);
+      overflow: hidden;
+    }
+
+    .hero-content {
+      padding: var(--space-xl) clamp(1.5rem, 5vw, 4rem) var(--space-xl);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--space-m);
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-content h1 { color: var(--cream); margin-bottom: var(--space-m); }
+
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-content p {
+      color: rgba(245,240,232,0.7);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-l);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-s);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      background: var(--gold);
+      color: var(--green-deep);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: #e8e930; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      border: 1px solid rgba(245,240,232,0.25);
+      color: var(--cream);
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      border-radius: 2px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(245,240,232,0.6);
+      background: rgba(245,240,232,0.06);
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      height: 100%;
+      min-height: 60vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .hero-clover {
+      position: absolute;
+      bottom: 0; right: -10%;
+      width: 120%;
+      max-width: 700px;
+      opacity: 0.06;
+    }
+
+    .hero-clover-outline {
+      position: relative;
+      z-index: 1;
+      width: 280px;
+      height: 280px;
+      margin-bottom: var(--space-xl);
+    }
+
+    .clover-svg { width: 100%; height: 100%; }
+
+    /* ─── Section Base ─── */
+    section { padding: clamp(4rem, 10vw, 8rem) 0; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--green-light);
+    }
+
+    /* ─── Leistungen ─── */
+    #leistungen { background: var(--cream); }
+
+    .leistungen-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-l);
+      align-items: end;
+      margin-bottom: var(--space-xl);
+    }
+
+    .leistungen-header p {
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .leistungen-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(26,24,0,0.08);
+    }
+
+    .leistung-card {
+      background: var(--cream);
+      padding: clamp(2rem, 4vw, 3rem);
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .leistung-card:hover { background: var(--cream-dark); }
+
+    .leistung-number {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      color: rgba(26,24,0,0.08);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .leistung-card h3 {
+      font-size: 1.4rem;
+      color: var(--green-deep);
+      margin-bottom: 1rem;
+    }
+
+    .leistung-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .leistung-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid rgba(26,24,0,0.2);
+      border-radius: 20px;
+      color: var(--green-mid);
+    }
+
+    /* ─── Haltung ─── */
+    #haltung {
+      background: var(--green-deep);
+      color: var(--cream);
+    }
+
+    .haltung-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .haltung-quote {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      line-height: 1.2;
+      color: var(--cream);
+    }
+
+    .haltung-quote em { color: var(--gold); font-style: italic; }
+
+    .haltung-text { display: flex; flex-direction: column; gap: var(--space-m); }
+
+    .haltung-text p { color: rgba(245,240,232,0.75); line-height: 1.85; max-width: 52ch; }
+
+    .haltung-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+      margin-top: var(--space-s);
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .value-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 0.55em;
+      flex-shrink: 0;
+    }
+
+    .value-item span { font-size: 0.95rem; color: rgba(245,240,232,0.85); line-height: 1.5; }
+
+    /* ─── Arbeiten ─── */
+    #arbeiten { background: var(--cream-dark); }
+
+    .arbeiten-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: var(--space-l);
+      gap: var(--space-m);
+    }
+
+    .arbeiten-header a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--green-mid);
+      border-bottom: 1px solid var(--green-light);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .arbeiten-header a:hover { color: var(--green-deep); }
+
+    .arbeiten-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: rgba(26,24,0,0.08);
+    }
+
+    .arbeit-card {
+      background: var(--cream);
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      cursor: pointer;
+    }
+
+    .arbeit-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.6s ease;
+    }
+
+    .arbeit-card:hover .arbeit-bg { transform: scale(1.04); }
+
+    /* Placeholder-Farben pro Karte */
+    .arbeit-card:nth-child(1) .arbeit-bg { background: linear-gradient(135deg, #2A2800 0%, #1A1800 100%); }
+    .arbeit-card:nth-child(2) .arbeit-bg { background: linear-gradient(135deg, #3A3800 0%, #2A2800 100%); }
+    .arbeit-card:nth-child(3) .arbeit-bg { background: linear-gradient(135deg, #F3F633 0%, #C4C400 100%); }
+    .arbeit-card:nth-child(4) .arbeit-bg { background: linear-gradient(135deg, #1A1800 0%, #0A0A00 100%); }
+
+    .arbeit-content {
+      position: relative;
+      z-index: 1;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    }
+
+    .arbeit-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.5rem;
+    }
+
+    .arbeit-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    /* ─── Prozess ─── */
+    #prozess { background: var(--cream); }
+
+    .prozess-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-l);
+      margin-top: var(--space-xl);
+    }
+
+    .prozess-step { position: relative; }
+
+    .prozess-step::after {
+      content: '';
+      position: absolute;
+      top: 1.25rem;
+      right: -2rem;
+      width: calc(var(--space-l) - 1.5rem);
+      height: 1px;
+      background: rgba(26,24,0,0.15);
+    }
+
+    .prozess-step:last-child::after { display: none; }
+
+    .prozess-num {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+
+    .prozess-step h3 {
+      font-size: 1.1rem;
+      color: var(--green-deep);
+      margin-bottom: 0.75rem;
+    }
+
+    .prozess-step p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ─── Kontakt ─── */
+    #kontakt {
+      background: var(--green-deep);
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .kontakt-inner { max-width: 700px; margin-inline: auto; }
+
+    .kontakt-inner h2 { color: var(--cream); margin-bottom: var(--space-m); }
+
+    .kontakt-inner p { color: rgba(245,240,232,0.65); margin-inline: auto; margin-bottom: var(--space-l); }
+
+    .kontakt-actions {
+      display: flex;
+      gap: var(--space-s);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .kontakt-info {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-l);
+      flex-wrap: wrap;
+      margin-top: var(--space-xl);
+      padding-top: var(--space-l);
+      border-top: 1px solid rgba(245,240,232,0.1);
+    }
+
+    .kontakt-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .kontakt-detail-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .kontakt-detail-value {
+      font-size: 1rem;
+      color: rgba(245,240,232,0.8);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      background: #0A0A00;
+      color: rgba(245,240,232,0.4);
+      padding: var(--space-m) 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-m);
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: rgba(245,240,232,0.6);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-m);
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      color: rgba(245,240,232,0.4);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: rgba(245,240,232,0.7); }
+
+    .footer-copy { font-size: 0.8rem; }
+
+    /* ─── Divider ─── */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: var(--space-m) 0;
+    }
+
+    /* ─── Animations ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+
+      .leistungen-header { grid-template-columns: 1fr; gap: var(--space-m); }
+      .leistungen-grid { grid-template-columns: 1fr; }
+
+      .haltung-inner { grid-template-columns: 1fr; }
+
+      .arbeiten-grid { grid-template-columns: 1fr; }
+
+      .prozess-grid { grid-template-columns: 1fr 1fr; }
+      .prozess-step::after { display: none; }
+
+      .nav-left { display: none; }
+      .nav-right .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .nav-inner { grid-template-columns: auto 1fr auto; }
+      .nav-logo { justify-content: center; }
+    }
+
+    @media (max-width: 540px) {
+      .prozess-grid { grid-template-columns: 1fr; }
+      .kontakt-info { gap: var(--space-m); }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+
+        <!-- LEFT: Links -->
+        <ul class="nav-left" id="navLeft">
+          <li><a href="#leistungen">Leistungen</a></li>
+          <li><a href="#haltung">Haltung</a></li>
+          <li><a href="#arbeiten">Arbeiten</a></li>
+          <li><a href="#prozess">Prozess</a></li>
+        </ul>
+
+        <!-- LEFT MOBILE: Hamburger -->
+        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+          <span></span><span></span><span></span>
+        </button>
+
+        <!-- CENTER: Logo -->
+        <div class="nav-logo">
+          <a href="#">KLEE<span class="nav-logo-dot"></span></a>
+        </div>
+
+        <!-- RIGHT: CTA -->
+        <div class="nav-right">
+          <a href="#kontakt" class="nav-cta">Gespräch starten</a>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- MOBILE MENU (slides in from left) -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#leistungen" class="mobile-link">Leistungen</a>
+    <a href="#haltung"    class="mobile-link">Haltung</a>
+    <a href="#arbeiten"   class="mobile-link">Arbeiten</a>
+    <a href="#prozess"    class="mobile-link">Prozess</a>
+    <a href="#kontakt"    class="mobile-link">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Marketing Agentur</div>
+      <h1>Marken<br>mit <em>Haltung.</em></h1>
+      <p>Wir entwickeln Strategien, die wirken — und Gestaltung, die bleibt. Für Marken, die etwas zu sagen haben.</p>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Projekt anfragen</a>
+        <a href="#arbeiten" class="btn-secondary">Arbeiten ansehen</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-clover-outline">
+        <!-- Vierblättriges Kleeblatt SVG -->
+        <svg class="clover-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Blatt oben -->
+          <circle cx="100" cy="67" r="45" fill="rgba(243,246,51,0.18)" stroke="rgba(243,246,51,0.5)" stroke-width="1.5"/>
+          <!-- Blatt rechts -->
+          <circle cx="133" cy="100" r="45" fill="rgba(243,246,51,0.18)" stroke="rgba(243,246,51,0.5)" stroke-width="1.5"/>
+          <!-- Blatt unten -->
+          <circle cx="100" cy="133" r="45" fill="rgba(243,246,51,0.18)" stroke="rgba(243,246,51,0.5)" stroke-width="1.5"/>
+          <!-- Blatt links -->
+          <circle cx="67"  cy="100" r="45" fill="rgba(243,246,51,0.18)" stroke="rgba(243,246,51,0.5)" stroke-width="1.5"/>
+          <!-- Stiel -->
+          <path d="M100 155 C100 170 92 185 84 190" stroke="rgba(243,246,51,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEISTUNGEN -->
+  <section id="leistungen">
+    <div class="container">
+      <div class="leistungen-header fade-up">
+        <div>
+          <div class="section-label">Was wir tun</div>
+          <h2>Unsere<br>Leistungen</h2>
+        </div>
+        <p>Wir arbeiten an der Schnittstelle von Strategie, Design und Kommunikation. Klar gedacht, konsequent umgesetzt.</p>
+      </div>
+
+      <div class="leistungen-grid">
+
+        <div class="leistung-card fade-up">
+          <div class="leistung-number">01</div>
+          <h3>Markenstrategie</h3>
+          <p>Wir finden, wer Sie sind. Positionierung, Markenkern und Botschaften, die Bestand haben — nicht nur bis zur nächsten Trendwende.</p>
+          <div class="leistung-tags">
+            <span class="tag">Positionierung</span>
+            <span class="tag">Brand Purpose</span>
+            <span class="tag">Messaging</span>
+          </div>
+        </div>
+
+        <div class="leistung-card fade-up">
+          <div class="leistung-number">02</div>
+          <h3>Corporate Design</h3>
+          <p>Visuelles Erscheinungsbild, das Haltung zeigt. Logo, Farben, Typografie — und ein System, das in der Praxis funktioniert.</p>
+          <div class="leistung-tags">
+            <span class="tag">Logo & CI</span>
+            <span class="tag">Design System</span>
+            <span class="tag">Print & Digital</span>
+          </div>
+        </div>
+
+        <div class="leistung-card fade-up">
+          <div class="leistung-number">03</div>
+          <h3>Kampagnen</h3>
+          <p>Konzepte, die Menschen erreichen. Von der Idee bis zur finalen Umsetzung — on- und offline, kanalübergreifend gedacht.</p>
+          <div class="leistung-tags">
+            <span class="tag">Konzept</span>
+            <span class="tag">Kampagnenplanung</span>
+            <span class="tag">Content</span>
+          </div>
+        </div>
+
+        <div class="leistung-card fade-up">
+          <div class="leistung-number">04</div>
+          <h3>Digitale Kommunikation</h3>
+          <p>Social Media, Web, E-Mail — mit Strategie dahinter, nicht nur Aktivität. Reichweite, die zu Ihrer Marke passt.</p>
+          <div class="leistung-tags">
+            <span class="tag">Social Media</span>
+            <span class="tag">SEO/SEA</span>
+            <span class="tag">E-Mail Marketing</span>
+          </div>
+        </div>
+
+        <div class="leistung-card fade-up">
+          <div class="leistung-number">05</div>
+          <h3>Webdesign & Entwicklung</h3>
+          <p>Websites, die Ihre Marke sichtbar machen — schnell, zugänglich, gut gestaltet. Von der UX bis zur technischen Umsetzung.</p>
+          <div class="leistung-tags">
+            <span class="tag">UX/UI</span>
+            <span class="tag">WordPress</span>
+            <span class="tag">Barrierefreiheit</span>
+          </div>
+        </div>
+
+        <div class="leistung-card fade-up">
+          <div class="leistung-number">06</div>
+          <h3>Beratung & Sparring</h3>
+          <p>Manchmal braucht es keinen Auftrag, sondern einen Gesprächspartner. Wir denken mit — ehrlich, direkt, ohne Agentur-Sprech.</p>
+          <div class="leistung-tags">
+            <span class="tag">Strategie-Workshop</span>
+            <span class="tag">Analyse</span>
+            <span class="tag">Begleitung</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HALTUNG -->
+  <section id="haltung">
+    <div class="container">
+      <div class="haltung-inner">
+        <div class="fade-up">
+          <div class="section-label" style="color: var(--gold);">Wer wir sind</div>
+          <blockquote class="haltung-quote">
+            Gutes Marketing<br>braucht keine<br><em>Lautstärke.</em>
+          </blockquote>
+        </div>
+
+        <div class="haltung-text fade-up">
+          <p>KLEE ist eine inhabergeführte Marketingagentur. Wir arbeiten nicht für jeden — aber für die, die wir begleiten, geben wir alles. Keine verschachtelten Strukturen, keine wechselnden Ansprechpartner.</p>
+          <p>Wir glauben, dass die stärksten Marken nicht die lautesten sind, sondern die klarsten. Wer weiß, wofür er steht, muss es nicht beweisen — er zeigt es.</p>
+          <div class="haltung-values">
+            <div class="value-item"><div class="value-dot"></div><span>Direkt & ehrlich</span></div>
+            <div class="value-item"><div class="value-dot"></div><span>Inhabergeführt</span></div>
+            <div class="value-item"><div class="value-dot"></div><span>Langfristige Partnerschaften</span></div>
+            <div class="value-item"><div class="value-dot"></div><span>Strategie vor Aktionismus</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARBEITEN -->
+  <section id="arbeiten">
+    <div class="container">
+      <div class="arbeiten-header fade-up">
+        <div>
+          <div class="section-label">Referenzen</div>
+          <h2>Ausgewählte<br>Arbeiten</h2>
+        </div>
+        <a href="#kontakt">Alle Projekte anfragen →</a>
+      </div>
+
+      <div class="arbeiten-grid">
+        <div class="arbeit-card fade-up">
+          <div class="arbeit-bg"></div>
+          <div class="arbeit-content">
+            <div class="arbeit-tag">Markenstrategie · Corporate Design</div>
+            <div class="arbeit-title">Neupositionierung eines regionalen Handwerksbetriebs</div>
+          </div>
+        </div>
+
+        <div class="arbeit-card fade-up">
+          <div class="arbeit-bg"></div>
+          <div class="arbeit-content">
+            <div class="arbeit-tag">Kampagne · Social Media</div>
+            <div class="arbeit-title">Saisonkampagne für nachhaltiges Mode-Label</div>
+          </div>
+        </div>
+
+        <div class="arbeit-card fade-up">
+          <div class="arbeit-bg"></div>
+          <div class="arbeit-content">
+            <div class="arbeit-tag">Webdesign · Entwicklung</div>
+            <div class="arbeit-title">Website-Relaunch für Beratungsboutique</div>
+          </div>
+        </div>
+
+        <div class="arbeit-card fade-up">
+          <div class="arbeit-bg"></div>
+          <div class="arbeit-content">
+            <div class="arbeit-tag">CI · Kommunikation</div>
+            <div class="arbeit-title">Vollständige Markenentwicklung für NGO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROZESS -->
+  <section id="prozess">
+    <div class="container">
+      <div class="fade-up" style="max-width: 600px; margin-bottom: var(--space-xl);">
+        <div class="section-label">Wie wir arbeiten</div>
+        <h2>Klarer Prozess,<br>verlässliche Ergebnisse.</h2>
+      </div>
+
+      <div class="prozess-grid">
+        <div class="prozess-step fade-up">
+          <div class="prozess-num">1</div>
+          <h3>Verstehen</h3>
+          <p>Wir hören zu, bevor wir sprechen. Erstgespräch, Briefing, ehrliche Bestandsaufnahme.</p>
+        </div>
+
+        <div class="prozess-step fade-up">
+          <div class="prozess-num">2</div>
+          <h3>Denken</h3>
+          <p>Analyse, Strategie, Konzept. Wir liefern keine Bauchgefühl-Lösungen.</p>
+        </div>
+
+        <div class="prozess-step fade-up">
+          <div class="prozess-num">3</div>
+          <h3>Gestalten</h3>
+          <p>Umsetzung, die zum Konzept passt. Iterativ, transparent, mit Ihnen zusammen.</p>
+        </div>
+
+        <div class="prozess-step fade-up">
+          <div class="prozess-num">4</div>
+          <h3>Begleiten</h3>
+          <p>Abgabe ist nicht das Ende. Wir bleiben, solange Sie uns brauchen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div class="container">
+      <div class="kontakt-inner fade-up">
+        <div class="section-label" style="color: var(--gold); justify-content: center;">Loslegen</div>
+        <h2>Bereit für<br>ein Gespräch?</h2>
+        <div class="divider" style="margin-inline: auto;"></div>
+        <p>Erzählen Sie uns von Ihrem Projekt. Wir melden uns innerhalb von 24 Stunden — ohne Verkaufsgespräch, versprochen.</p>
+        <div class="kontakt-actions">
+          <a href="mailto:hallo@klee-agentur.de" class="btn-primary">hallo@klee-agentur.de</a>
+          <a href="tel:+4900000000000" class="btn-secondary">Rückruf anfragen</a>
+        </div>
+
+        <div class="kontakt-info">
+          <div class="kontakt-detail">
+            <span class="kontakt-detail-label">E-Mail</span>
+            <span class="kontakt-detail-value">hallo@klee-agentur.de</span>
+          </div>
+          <div class="kontakt-detail">
+            <span class="kontakt-detail-label">Telefon</span>
+            <span class="kontakt-detail-value">+49 (0) 000 000 00 00</span>
+          </div>
+          <div class="kontakt-detail">
+            <span class="kontakt-detail-label">Standort</span>
+            <span class="kontakt-detail-value">Deutschland</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo">KLEE</span>
+        <ul class="footer-links">
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">Datenschutz</a></li>
+        </ul>
+        <span class="footer-copy">© 2025 KLEE Marketing</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Hamburger + Slide-Menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      mobileOverlay.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const open = !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open', open);
+      mobileOverlay.classList.toggle('open', open);
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    mobileOverlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
