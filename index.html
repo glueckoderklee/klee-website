@@ -237,6 +237,39 @@
     .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu a:hover { color: var(--green-mid); }
 
+    /* ─── Hero Avatar ─── */
+    .hero-avatar {
+      position: relative;
+      width: clamp(100px, 14vw, 160px);
+      height: clamp(100px, 14vw, 160px);
+      margin-bottom: var(--space-m);
+      flex-shrink: 0;
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .hero-avatar-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.25;
+      filter: blur(14px);
+      z-index: 0;
+      animation: avatarPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes avatarPulse {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.38; transform: scale(1.06); }
+    }
+
     /* ─── Hero ─── */
     #hero {
       min-height: 100svh;
@@ -799,6 +832,10 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-content">
+      <div class="hero-avatar">
+        <div class="hero-avatar-glow"></div>
+        <img src="./avatar.png" alt="KLEE Gründer" style="position:relative;z-index:1;" />
+      </div>
       <div class="hero-eyebrow">Marketing Agentur</div>
       <h1>Marken<br>mit <em>Haltung.</em></h1>
       <p>Wir entwickeln Strategien, die wirken — und Gestaltung, die bleibt. Für Marken, die etwas zu sagen haben.</p>

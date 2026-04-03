@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force\")",
+      "Bash(powershell -Command \"Get-ExecutionPolicy -Scope CurrentUser\")",
+      "Bash(npx skills:*)"
+    ]
+  }
+}
